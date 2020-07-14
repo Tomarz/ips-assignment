@@ -15,7 +15,12 @@
                         <br>
                     </p>
 
-                    <img src="/images/26226_travel-photos.png" alt="img" />
+                    <img srcset="
+                        /images/flamingo@3x.jpg 3x,
+                        /images/flamingo@2x.jpg 2x"
+                        src="/images/flamingo.jpg"
+                        alt="img"    
+                    />
 
                     <h2>1. Research Your Destination To Find The Best Photo Opportunities</h2>
 
@@ -96,5 +101,45 @@
         img {
             margin: 0 0 30px 0;
         }
+    }
+
+    // MEDIA QUERIES
+    @media (max-width: 575.98px) {
+
+    }
+
+    @media (max-width: 767.98px) {
+        .blog-article {
+            padding: 25px 0;
+
+            .grid {
+                &__col:not(:last-child) {
+                    margin-bottom: 33px;
+                }
+            }
+
+            &__main {
+                max-width: 100%;
+            }
+
+            &__sidebar {
+                min-height: 50vh;
+                padding: 34px 29px;
+            }
+
+            img {
+                max-width: 100vw;
+                margin-left: -18px;
+                margin-right: -18px;
+            }
+        }
+    }
+
+    @media (max-width: 991.98px) {
+
+    }
+
+    @media (max-width: 1199.98px) {
+
     }
 </style>
