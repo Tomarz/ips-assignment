@@ -6,8 +6,18 @@
                 <a class="modal__close">
                     <img src="/images/close.png" alt="img" @click="close">
                 </a>
+
+                <div class="modal__header">
+                    <slot name="header"></slot>
+                </div>
+
+                <div class="modal__content">
+                    <slot name="content"></slot>
+                </div>
                 
-                <a class="btn"><span>Send Me The Tips »</span></a>
+                <div class="modal__footer">
+                    <slot name="footer"></slot>
+                </div>
             </div>
         </div>
     </transition>
@@ -60,8 +70,17 @@
         &__box {
             position: relative;
             width: 570px;
+            max-width: 100%;
             padding: 38px 65px;
             background: #fff;
+        }
+
+        &__header {
+            margin: 0 0 22px 0;
+        }
+
+        &__footer {
+            margin: 21px 0 0 0;
         }
     }
 
@@ -82,5 +101,26 @@
             opacity: 0;
             transform: translateY(-50px)
         }
+    }
+
+    @media (max-width: 575.98px) {
+        
+    }
+
+    @media (max-width: 767.98px) {
+        .modal {
+            &__box {
+                padding: 14px 18px 24px 18px;
+                margin: 0 10px;
+            }
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        
+    }
+
+    @media (max-width: 1199.98px) {
+
     }
 </style>

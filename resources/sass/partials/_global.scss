@@ -56,6 +56,23 @@ body {
     }
 }
 
+fieldset {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+input {
+    &:focus {
+        outline: none;
+    }
+}
+
+p {
+    margin: 0;
+}
+
 a {
     cursor: pointer;
 }
@@ -63,6 +80,7 @@ a {
 img {
     display: block;
     max-width: 100%;
+    margin: 0;
 }
 
 // HEADINGS
@@ -77,4 +95,12 @@ h2 {
     font-size: 18px;
     line-height: 22px;
     font-weight: 700;
+}
+
+h5 {
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 300;
+    color: #848484;
+    margin: 0 0 11px 0;
 }
