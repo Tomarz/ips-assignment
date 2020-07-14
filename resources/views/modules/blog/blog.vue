@@ -75,13 +75,13 @@
         <modal :show="isModal" @close="toggleModal">
             <template v-slot:header>
                 <div class="steps">
-                    <h5>Step 1 of 2</h5>
+                    <h5>Step <span>{{ currentStep }}</span> of 2</h5>
                     <div class="grid grid--nogap">
                         <div class="grid__col">
-                            <div class="steps__step steps__step--active"></div>
+                            <div class="steps__step" :class="{'steps__step--active': !submitted}"></div>
                         </div>
                         <div class="grid__col">
-                            <div class="steps__step"></div>
+                            <div class="steps__step" :class="{'steps__step--active': submitted}"></div>
                         </div>
                     </div>
                 </div>
@@ -89,25 +89,35 @@
 
             <template v-slot:content>
                 <div class="newsletter">
-                    <h2>Enter Your Email To Get <span>FREE</span><br> iPhone Photography Email Tips:</h2>
-                    
-                    <fieldset>
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            placeholder="Please enter your email here"
-                            v-model="email"
-                            :class="{'error': invalid}"
-                            @keyup="clearError"
-                            @keyup.enter="submit"
-                        >
-                    </fieldset>
+                    <template v-if="!submitted">
+                        <h2>Enter Your Email To Get <span>FREE</span><br> iPhone Photography Email Tips:</h2>
+                        
+                        <fieldset>
+                            <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                placeholder=" "
+                                v-model="email"
+                                :class="{'error': invalid}"
+                                @keyup="clearError"
+                                @keyup.enter="submit"
+                            >
+                            <label for="email" class="newsletter__placeholder">{{ placeholderText }}</label>
+                        </fieldset>
+                    </template>
+
+                    <h2 v-else>Thanks for subscribing!</h2>
                 </div>
             </template>
 
             <template v-slot:footer>
-                <a class="btn"><span>Send Me The Tips »</span></a>
+                <template v-if="!submitted">
+                    <a class="btn" @click="submit" v-if="!loading"><span>Send Me The Tips »</span></a>
+                    <a class="btn" v-else><div class="btn__loader"></div></a>
+                </template>
+
+                <a class="btn" @click="toggleModal" v-else><span>Close</span></a>
             </template>
         </modal>
     </div>
@@ -123,12 +133,43 @@
         },
         data () {
             return {
-                isModal: false
+                isModal: false,
+                loading: false,
+                submitted: false,
+                invalid: false,
+                email: null
+            }
+        },
+        computed: {
+            currentStep () {
+                return this.submitted ? 2 : 1
+            },
+            placeholderText () {
+                return this.invalid ? 'Please enter a valid email address' : 'Please enter your email here'
             }
         },
         methods: {
             toggleModal () {
                 this.isModal = !this.isModal
+            },
+            validateEmail (email) {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+            },
+            clearError () {
+                this.invalid = false
+            },
+            submit () {
+                if (this.validateEmail(this.email)) {
+                    this.loading = true
+        
+                    setTimeout(() => {
+                        this.submitted = true
+                        this.loading = false
+                    }, 2000)
+                } else {
+                    this.invalid = true
+                }
             }
         }
     }
@@ -174,6 +215,18 @@
 
         .grid {
             display: flex;
+        }
+    }
+    .steps {
+        text-align: center;
+
+        &__step {
+            height: 3px;
+            background: #E5E5E5;
+            transition: all .2s ease-in-out;
+            &--active {
+                background: linear-gradient(90deg, #AC519C 0.83%, #E5424F 100%);
+            }
         }
     }
 
