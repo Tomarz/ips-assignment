@@ -65,16 +65,33 @@
                     </p>
                 </div>
                 <div class="blog-article__sidebar grid__col">
-                    <a class="btn"><span>Send Me The Tips</span></a>
+                    <a class="btn" @click="toggleModal"><span>Send Me The Tips</span></a>
                 </div>
             </div>
         </div>
+
+        <modal :show="isModal" @close="toggleModal"></modal>
     </article>
 </template>
 
 <script>
+    import modal from '../modal/modal.vue'
+
     export default {
-        name: 'blog-article'
+        name: 'blog-article',
+        components: {
+            modal
+        },
+        data () {
+            return {
+                isModal: false
+            }
+        },
+        methods: {
+            toggleModal () {
+                this.isModal = !this.isModal
+            }
+        }
     }
 </script>
 
