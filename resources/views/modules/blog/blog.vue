@@ -88,7 +88,7 @@
             </template>
 
             <template v-slot:content>
-                <div class="newsletter">
+                <div class="newsletter" :class="`newsletter--step${currentStep}`">
                     <template v-if="!submitted">
                         <h2>Enter Your Email To Get <span>FREE</span><br> iPhone Photography Email Tips:</h2>
                         
@@ -185,7 +185,8 @@
 
         &__main {
             flex: 3;
-            max-width: calc(100% - 340px);
+            max-width: calc(100% - 270px);
+            padding-right: 70px;
         }
 
         &__sidebar {
@@ -257,6 +258,7 @@
             font-weight: 300;
             padding: 0 15px;
             border: 1px solid transparent;
+            border-radius: 0;
             background: #FFFFFF;
             box-shadow: inset 0px 1px 5px rgba(142, 142, 142, 0.5);
             transition: all .2s ease-in-out;
@@ -293,7 +295,17 @@
 
     // MEDIA QUERIES
     @media (max-width: 575.98px) {
-
+        .newsletter {
+            &--step1 {
+                h2 {
+                    text-align: left;
+                }
+            }
+            h2 {
+                font-size: 20px;
+                line-height: 26px;
+            }
+        }
     }
 
     @media (max-width: 767.98px) {
@@ -312,10 +324,11 @@
 
             &__main {
                 max-width: 100%;
+                padding-right: 0;
             }
 
             &__sidebar {
-                min-height: 50vh;
+                min-height: 40vh;
                 padding: 34px 29px;
             }
 

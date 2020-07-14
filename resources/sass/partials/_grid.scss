@@ -8,11 +8,6 @@
 .grid {
     display: flex;
     align-items: flex-start;
-    column-gap: 70px;
-
-    &--nogap {
-        column-gap: 0;
-    }
 
     &__col {
         flex: 1;
